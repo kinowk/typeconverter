@@ -1,0 +1,26 @@
+package hello.typeconverter;
+
+import hello.typeconverter.converter.IntegerToStringConverter;
+import hello.typeconverter.converter.IpPortToStringConverter;
+import hello.typeconverter.converter.StringToIntegerConverter;
+import hello.typeconverter.converter.StringToIpPortConverter;
+import hello.typeconverter.formatter.MyNumberFormatter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+         // 우선순위로 인한 주석처리 (MyNumberFormatter 도 문자를 숫자로, 숫자를 문자로 formatting)
+//        registry.addConverter(new StringToIntegerConverter());
+//        registry.addConverter(new IntegerToStringConverter());
+        registry.addConverter(new StringToIpPortConverter());
+        registry.addConverter(new IpPortToStringConverter());
+
+        // 추가
+        registry.addFormatter(new MyNumberFormatter());
+    }
+}
